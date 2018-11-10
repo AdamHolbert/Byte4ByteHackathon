@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+tbody tr:hover {
+    background-color: lightcyan;
+}
