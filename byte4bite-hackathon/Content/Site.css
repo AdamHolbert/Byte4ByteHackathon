@@ -26,3 +26,7 @@ textarea {
 .btn-custom {
     border: 1px solid black;
 }
+
+tbody tr:hover {
+    background-color: lightcyan;
+}
