@@ -23,6 +23,21 @@ textarea {
     max-width: 280px;
 }
 
+
 #inventoryTitle {
     text-align:center;
 }
+
+.btn-custom {
+    border: 1px solid black;
+}
+
+tbody tr:hover {
+    background-color: lightcyan;
+}
+
+
+hidden {
+    display: none;
+}
+

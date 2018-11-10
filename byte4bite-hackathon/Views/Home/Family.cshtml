@@ -2,214 +2,140 @@
     ViewBag.Title = "Family";
 }
 @section Scripts{
+    @Scripts.Render("~/Scripts/handlebars.js")
     @Scripts.Render("~/Scripts/Custom/family.js")
 }
-
-<h2 style="text-align:center">Families</h2>
-
-<div id="familiesTemplate">
-    <div id="familycontainer">
-
-    </div>
-    <table id="familiesTable">
+<script type="text/html" id="familiestemplate">
+    <table id="familiesTable" class="table">
         <thead>
             <tr>
                 <th>
                     Family Number
                 </th>
-                <th>
+                <th style="text-align:center">
                     Last Visited
                 </th>
-                <th>
+                <th style="text-align:center">
                     Last Visited Points
                 </th>
-                <th>
+                <th style="text-align:center">
                     Max Points
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="text-align:center">
             {{#each families}}
-        <tr id="${ID}" class="familyLineItem">
-            <td>
-                ${FamilyNumber}
-            </td>
-            <td>
-                ${LastVisitedDate}
-            </td>
-            <td>
-                ${LastVistedAmount}
-            </td>
-            <td>
-                ${MaxQuantity}
-            </td>
-        </tr>
-        {{/each}}
-            @*<tr>
+            <tr id="{{ID}}" class="familyLineItem">
                 <td>
-                    3820HFY4UFY74
+                    {{FamilyID}}
                 </td>
                 <td>
-                    11/06/2018
-                </td>
-                <td>
-                    100
-                </td>
-                <td>
-                    130
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    38HFJFD8Y38YR
-                </td>
-                <td>
-                    11/05/2018
-                </td>
-                <td>
-                    130
-                </td>
-                <td>
-                    130
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    0988HFHFO8YHUW
-                </td>
-                <td>
-                    11/03/2018
-                </td>
-                <td>
-                    140
-                </td>
-                <td>
-                    130
-                </td>
-            </tr>*@
-        </tbody>
-    </table>
-
-    <div class="btn btn-primary" id="addNewFamily">Add New Family</div>
-</div>
-
-<script id="familyrowtemplate" type="text/html">
-    <table id="familiesTable">
-        <thead>
-            <tr>
-                <th>
-                    Family Number
-                </th>
-                <th>
-                    Last Visited
-                </th>
-                <th>
-                    Last Visited Points
-                </th>
-                <th>
-                    Max Points
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each families}}
-            <tr id="${ID}" class="familyLineItem">
-                <td>
-                    {{FamilyNumber}}
-                </td>
-                <td>
-                    {{LastVisitedDate}}
+                    {{LastOrderDate}}
                 </td>
                 <td>
                     {{LastVistedAmount}}
                 </td>
                 <td>
-                    {{MaxQuantity}}
+                    {{MaxOrderQuantity}}
                 </td>
             </tr>
             {{/each}}
-            @*<tr>
-                    <td>
-                        3820HFY4UFY74
-                    </td>
-                    <td>
-                        11/06/2018
-                    </td>
-                    <td>
-                        100
-                    </td>
-                    <td>
-                        130
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        38HFJFD8Y38YR
-                    </td>
-                    <td>
-                        11/05/2018
-                    </td>
-                    <td>
-                        130
-                    </td>
-                    <td>
-                        130
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        0988HFHFO8YHUW
-                    </td>
-                    <td>
-                        11/03/2018
-                    </td>
-                    <td>
-                        140
-                    </td>
-                    <td>
-                        130
-                    </td>
-                </tr>*@
         </tbody>
     </table>
 </script>
-<div id="familiesCartTemplate" style="display:none">
-    <div>Search</div>
-    <input type="text" id="seachText"/>
-    <table id="cartInvintory">
+
+<script type="text/html" id="familiescarttemplate">
+
+    <table id="cartInvintory" class="table">
         <thead>
             <tr>
                 <th>
                     Item
                 </th>
-                <th>
-                    Type
-                </th>
+                @*<th>
+                        Type
+                    </th>*@
                 <th>
                     Quantity
                 </th>
                 <th>
-                    Max Quantity
+                    Point Equivalant
                 </th>
             </tr>
         </thead>
         <tbody>
-            {{each items}}
-            <tr id="${ID}" class="itemLineItem">
+            {{#each items}}
+            <tr class="itemLineItem" id="{{ItemID}}">
                 <td>
-                    ${FamilyNumber}
+                    {{ItemName}}
                 </td>
                 <td>
-                    ${LastVisitedDate}
+                    <input id="{{ItemID}}_Quantity" type="number" class="itemQuantity">
                 </td>
                 <td>
-                    ${LastVistedAmount}
-                </td>
-                <td>
-                    ${MaxQuantity}
+                    <div id="{{ItemID}}_PointEquivalent" class="itempointtotal"></div>
                 </td>
             </tr>
             {{/each}}
+            @*<tr id="${ID}">
+                    <td>
+                        Green Beans
+                    </td>
+                    <td>
+                        <input id="GreenBean_Quantity" type="number" class="itemQuantity">
+                    </td>
+                    <td>
+                        <div id="GreenBean_PointEquivalent">0</div>
+                    </td>
+                </tr>
+                <tr id="${ID}">
+                    <td>
+                        Bread
+                    </td>
+                    <td>
+                        <input id="Bread_Quantity" type="number" class="itemQuantity">
+                    </td>
+                    <td>
+                        <div id="Bread_PointEquivalent">0</div>
+                    </td>
+                </tr>
+                <tr id="${ID}">
+                    <td>
+                        Milk
+                    </td>
+                    <td>
+                        <input id="Milk_Quantity" type="number" class="itemQuantity">
+                    </td>
+                    <td>
+                        <div id="Milk_PointEquivalent">0</div>
+                    </td>
+                </tr>*@
         </tbody>
     </table>
+</script>
+
+<div id="familiesmain">
+    <h2 style="text-align:center;margin:15px">Families</h2>
+
+    <div id="familiescontainer">
+    </div>
+
+    <div class="btn btn-primary" id="addNewFamily">Add New Family</div>
+</div>
+
+<div id="familiescartmain" style="display:none">
+    <h2 style="text-align:center;margin:15px" id="familycartheader">Family 3820HFY4UFY74 Cart</h2>
+
+    <div style="display:inline-block;margin-bottom:20px">Search</div>
+    <input style="display:inline-block" type="text" id="seachText" />
+    <div class="cartcontainer"></div>
+    <div style="display:inline-block;margin-left:51%;margin-right:10px;font-weight:bold">Total Points</div>
+    <div style="display:inline-block;" id="totalPoints">0</div>
+    <div style="display:inline-block;margin-left:10%;font-weight:bold;margin-right:10px">Max Points</div>
+    <div style="display:inline-block;" id="maxPoints">130</div>
+    <br />
+    <div style="width:100%;text-align:center;margin-top:20px">
+        <div class="btn btn-success btn-lrg" style="width:30%;font-weight:bold"
+             id="checkoutFamily">Checkout</div>
+    </div>
 </div>
