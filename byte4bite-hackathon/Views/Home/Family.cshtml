@@ -52,9 +52,9 @@
                 <th>
                     Item
                 </th>
-                @*<th>
-                        Type
-                    </th>*@
+                <th>
+                    Point Value
+                </th>
                 <th>
                     Quantity
                 </th>
@@ -68,6 +68,9 @@
             <tr class="itemLineItem" id="item_{{ItemID}}">
                 <td>
                     {{ItemName}}
+                </td>
+                <td>
+                    {{Points}}
                 </td>
                 <td>
                     <input id="{{ItemID}}_Quantity" type="number" class="itemQuantity">

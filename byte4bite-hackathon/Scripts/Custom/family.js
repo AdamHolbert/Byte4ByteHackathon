@@ -45,9 +45,6 @@ $(function () {
             if (items[i].ItemName.toUpperCase().includes(searchText) || searchText == "") {
                 $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
             }
-            //else {
-            //    $("#" + items[i].ItemID).show();
-            //}
         }
     });
     $("#seachText").blur(function (e) {
@@ -57,9 +54,6 @@ $(function () {
             if (items[i].ItemName.toUpperCase().includes(searchText) || searchText == "") {
                 $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
             }
-            //else {
-            //    $("#" + items[i].ItemID).show();
-            //}
         }
     });
 
