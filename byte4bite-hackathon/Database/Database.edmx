@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HackathonModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilySize" Type="int" Nullable="false" />
+          <Property Name="ChildrenHaveCheckoutConsent" Type="bit" Nullable="false" />
+          <Property Name="FamilyID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MaxPointTotal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoodKit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Discription" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ImageURL" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FoodPantry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="URL" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="FoodPantryStock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodPantryID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="15" Scale="2" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="PointValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ItemTypes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilyID" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="PointTotal" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PantryCoordinator">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FoodPantryID" Type="int" Nullable="false" />
+          <Property Name="IsAdministrator" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestedItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodPantryID" Type="int" Nullable="false" />
+          <Property Name="ItemID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="FulfillByDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_FoodPantryStockFoodPantryID">
+          <End Role="FoodPantry" Type="Self.FoodPantry" Multiplicity="1" />
+          <End Role="FoodPantryStock" Type="Self.FoodPantryStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FoodPantryStock">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodPantryStockItemID">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="FoodPantryStock" Type="Self.FoodPantryStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FoodPantryStock">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_itemstypeid">
+          <End Role="ItemTypes" Type="Self.ItemTypes" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemTypes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItemsItemID">
+          <End Role="Items" Type="Self.Items" Multiplicity="0..1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItemsOrderID">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ordersfamilyid">
+          <End Role="Family" Type="Self.Family" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Family">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="FamilyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PantryCoordinatorFoodPantryID">
+          <End Role="FoodPantry" Type="Self.FoodPantry" Multiplicity="1" />
+          <End Role="PantryCoordinator" Type="Self.PantryCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PantryCoordinator">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestItemsFoodPantryID">
+          <End Role="FoodPantry" Type="Self.FoodPantry" Multiplicity="1" />
+          <End Role="RequestedItems" Type="Self.RequestedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RequestedItems">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestItemsItemID">
+          <End Role="Items" Type="Self.Items" Multiplicity="1" />
+          <End Role="RequestedItems" Type="Self.RequestedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RequestedItems">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HackathonModelStoreContainer">
+          <EntitySet Name="Family" EntityType="Self.Family" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodKit" EntityType="Self.FoodKit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodPantry" EntityType="Self.FoodPantry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodPantryStock" EntityType="Self.FoodPantryStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemTypes" EntityType="Self.ItemTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PantryCoordinator" EntityType="Self.PantryCoordinator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestedItems" EntityType="Self.RequestedItems" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FoodPantryStockFoodPantryID" Association="Self.FK_FoodPantryStockFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantry" />
+            <End Role="FoodPantryStock" EntitySet="FoodPantryStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodPantryStockItemID" Association="Self.FK_FoodPantryStockItemID">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="FoodPantryStock" EntitySet="FoodPantryStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_itemstypeid" Association="Self.FK_itemstypeid">
+            <End Role="ItemTypes" EntitySet="ItemTypes" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItemsItemID" Association="Self.FK_OrderItemsItemID">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItemsOrderID" Association="Self.FK_OrderItemsOrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ordersfamilyid" Association="Self.FK_ordersfamilyid">
+            <End Role="Family" EntitySet="Family" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PantryCoordinatorFoodPantryID" Association="Self.FK_PantryCoordinatorFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantry" />
+            <End Role="PantryCoordinator" EntitySet="PantryCoordinator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestItemsFoodPantryID" Association="Self.FK_RequestItemsFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantry" />
+            <End Role="RequestedItems" EntitySet="RequestedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestItemsItemID" Association="Self.FK_RequestItemsItemID">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="RequestedItems" EntitySet="RequestedItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HackathonModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HackathonEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Families" EntityType="HackathonModel.Family" />
+          <EntitySet Name="FoodKits" EntityType="HackathonModel.FoodKit" />
+          <EntitySet Name="FoodPantries" EntityType="HackathonModel.FoodPantry" />
+          <EntitySet Name="FoodPantryStocks" EntityType="HackathonModel.FoodPantryStock" />
+          <EntitySet Name="Items" EntityType="HackathonModel.Item" />
+          <EntitySet Name="ItemTypes" EntityType="HackathonModel.ItemType" />
+          <EntitySet Name="OrderItems" EntityType="HackathonModel.OrderItem" />
+          <EntitySet Name="Orders" EntityType="HackathonModel.Order" />
+          <EntitySet Name="PantryCoordinators" EntityType="HackathonModel.PantryCoordinator" />
+          <EntitySet Name="RequestedItems" EntityType="HackathonModel.RequestedItem" />
+          <AssociationSet Name="FK_ordersfamilyid" Association="HackathonModel.FK_ordersfamilyid">
+            <End Role="Family" EntitySet="Families" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodPantryStockFoodPantryID" Association="HackathonModel.FK_FoodPantryStockFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantries" />
+            <End Role="FoodPantryStock" EntitySet="FoodPantryStocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PantryCoordinatorFoodPantryID" Association="HackathonModel.FK_PantryCoordinatorFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantries" />
+            <End Role="PantryCoordinator" EntitySet="PantryCoordinators" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestItemsFoodPantryID" Association="HackathonModel.FK_RequestItemsFoodPantryID">
+            <End Role="FoodPantry" EntitySet="FoodPantries" />
+            <End Role="RequestedItem" EntitySet="RequestedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodPantryStockItemID" Association="HackathonModel.FK_FoodPantryStockItemID">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="FoodPantryStock" EntitySet="FoodPantryStocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItemsItemID" Association="HackathonModel.FK_OrderItemsItemID">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestItemsItemID" Association="HackathonModel.FK_RequestItemsItemID">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="RequestedItem" EntitySet="RequestedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItemsOrderID" Association="HackathonModel.FK_OrderItemsOrderID">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FoodPantryStockItemID1" Association="HackathonModel.FK_FoodPantryStockItemID1">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="FoodPantryStock" EntitySet="FoodPantryStocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_itemstypeid" Association="HackathonModel.FK_itemstypeid">
+            <End Role="ItemType" EntitySet="ItemTypes" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Family">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilySize" Type="Int32" Nullable="false" />
+          <Property Name="ChildrenHaveCheckoutConsent" Type="Boolean" Nullable="false" />
+          <Property Name="FamilyID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="HackathonModel.FK_ordersfamilyid" FromRole="Family" ToRole="Order" />
+          <Property Name="MaxPointTotal" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FoodKit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Discription" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FoodPantry">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FoodPantryStocks" Relationship="HackathonModel.FK_FoodPantryStockFoodPantryID" FromRole="FoodPantry" ToRole="FoodPantryStock" />
+          <NavigationProperty Name="PantryCoordinators" Relationship="HackathonModel.FK_PantryCoordinatorFoodPantryID" FromRole="FoodPantry" ToRole="PantryCoordinator" />
+          <NavigationProperty Name="RequestedItems" Relationship="HackathonModel.FK_RequestItemsFoodPantryID" FromRole="FoodPantry" ToRole="RequestedItem" />
+        </EntityType>
+        <EntityType Name="FoodPantryStock">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodPantryID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoodPantry" Relationship="HackathonModel.FK_FoodPantryStockFoodPantryID" FromRole="FoodPantryStock" ToRole="FoodPantry" />
+          <NavigationProperty Name="Order" Relationship="HackathonModel.FK_FoodPantryStockItemID" FromRole="FoodPantryStock" ToRole="Order" />
+          <NavigationProperty Name="Item" Relationship="HackathonModel.FK_FoodPantryStockItemID1" FromRole="FoodPantryStock" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Precision="15" Scale="2" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <NavigationProperty Name="OrderItems" Relationship="HackathonModel.FK_OrderItemsItemID" FromRole="Item" ToRole="OrderItem" />
+          <NavigationProperty Name="RequestedItems" Relationship="HackathonModel.FK_RequestItemsItemID" FromRole="Item" ToRole="RequestedItem" />
+          <Property Name="PointValue" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoodPantryStocks" Relationship="HackathonModel.FK_FoodPantryStockItemID1" FromRole="Item" ToRole="FoodPantryStock" />
+          <NavigationProperty Name="ItemType" Relationship="HackathonModel.FK_itemstypeid" FromRole="Item" ToRole="ItemType" />
+        </EntityType>
+        <EntityType Name="ItemType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="HackathonModel.FK_itemstypeid" FromRole="ItemType" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="HackathonModel.FK_OrderItemsItemID" FromRole="OrderItem" ToRole="Item" />
+          <NavigationProperty Name="Order" Relationship="HackathonModel.FK_OrderItemsOrderID" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyID" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Family" Relationship="HackathonModel.FK_ordersfamilyid" FromRole="Order" ToRole="Family" />
+          <NavigationProperty Name="FoodPantryStocks" Relationship="HackathonModel.FK_FoodPantryStockItemID" FromRole="Order" ToRole="FoodPantryStock" />
+          <NavigationProperty Name="OrderItems" Relationship="HackathonModel.FK_OrderItemsOrderID" FromRole="Order" ToRole="OrderItem" />
+          <Property Name="PointTotal" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PantryCoordinator">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FoodPantryID" Type="Int32" Nullable="false" />
+          <Property Name="IsAdministrator" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FoodPantry" Relationship="HackathonModel.FK_PantryCoordinatorFoodPantryID" FromRole="PantryCoordinator" ToRole="FoodPantry" />
+        </EntityType>
+        <EntityType Name="RequestedItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodPantryID" Type="Int32" Nullable="false" />
+          <Property Name="ItemID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="FulfillByDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FoodPantry" Relationship="HackathonModel.FK_RequestItemsFoodPantryID" FromRole="RequestedItem" ToRole="FoodPantry" />
+          <NavigationProperty Name="Item" Relationship="HackathonModel.FK_RequestItemsItemID" FromRole="RequestedItem" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_ordersfamilyid">
+          <End Type="HackathonModel.Family" Role="Family" Multiplicity="1" />
+          <End Type="HackathonModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Family">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="FamilyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodPantryStockFoodPantryID">
+          <End Type="HackathonModel.FoodPantry" Role="FoodPantry" Multiplicity="1" />
+          <End Type="HackathonModel.FoodPantryStock" Role="FoodPantryStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FoodPantryStock">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PantryCoordinatorFoodPantryID">
+          <End Type="HackathonModel.FoodPantry" Role="FoodPantry" Multiplicity="1" />
+          <End Type="HackathonModel.PantryCoordinator" Role="PantryCoordinator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PantryCoordinator">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestItemsFoodPantryID">
+          <End Type="HackathonModel.FoodPantry" Role="FoodPantry" Multiplicity="1" />
+          <End Type="HackathonModel.RequestedItem" Role="RequestedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodPantry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RequestedItem">
+              <PropertyRef Name="FoodPantryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodPantryStockItemID">
+          <End Type="HackathonModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="HackathonModel.FoodPantryStock" Role="FoodPantryStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FoodPantryStock">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItemsItemID">
+          <End Type="HackathonModel.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="HackathonModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestItemsItemID">
+          <End Type="HackathonModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="HackathonModel.RequestedItem" Role="RequestedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RequestedItem">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItemsOrderID">
+          <End Type="HackathonModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="HackathonModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FoodPantryStockItemID1">
+          <End Type="HackathonModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="HackathonModel.FoodPantryStock" Role="FoodPantryStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FoodPantryStock">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_itemstypeid">
+          <End Type="HackathonModel.ItemType" Role="ItemType" Multiplicity="0..1" />
+          <End Type="HackathonModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HackathonModelStoreContainer" CdmEntityContainer="HackathonEntities">
+          <EntitySetMapping Name="Families">
+            <EntityTypeMapping TypeName="HackathonModel.Family">
+              <MappingFragment StoreEntitySet="Family">
+                <ScalarProperty Name="MaxPointTotal" ColumnName="MaxPointTotal" />
+                <ScalarProperty Name="FamilyID" ColumnName="FamilyID" />
+                <ScalarProperty Name="ChildrenHaveCheckoutConsent" ColumnName="ChildrenHaveCheckoutConsent" />
+                <ScalarProperty Name="FamilySize" ColumnName="FamilySize" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodKits">
+            <EntityTypeMapping TypeName="HackathonModel.FoodKit">
+              <MappingFragment StoreEntitySet="FoodKit">
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Discription" ColumnName="Discription" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodPantries">
+            <EntityTypeMapping TypeName="HackathonModel.FoodPantry">
+              <MappingFragment StoreEntitySet="FoodPantry">
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodPantryStocks">
+            <EntityTypeMapping TypeName="HackathonModel.FoodPantryStock">
+              <MappingFragment StoreEntitySet="FoodPantryStock">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="FoodPantryID" ColumnName="FoodPantryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="HackathonModel.Item">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="PointValue" ColumnName="PointValue" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemTypes">
+            <EntityTypeMapping TypeName="HackathonModel.ItemType">
+              <MappingFragment StoreEntitySet="ItemTypes">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="HackathonModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItems">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="HackathonModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="PointTotal" ColumnName="PointTotal" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="FamilyID" ColumnName="FamilyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PantryCoordinators">
+            <EntityTypeMapping TypeName="HackathonModel.PantryCoordinator">
+              <MappingFragment StoreEntitySet="PantryCoordinator">
+                <ScalarProperty Name="IsAdministrator" ColumnName="IsAdministrator" />
+                <ScalarProperty Name="FoodPantryID" ColumnName="FoodPantryID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestedItems">
+            <EntityTypeMapping TypeName="HackathonModel.RequestedItem">
+              <MappingFragment StoreEntitySet="RequestedItems">
+                <ScalarProperty Name="FulfillByDate" ColumnName="FulfillByDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="FoodPantryID" ColumnName="FoodPantryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

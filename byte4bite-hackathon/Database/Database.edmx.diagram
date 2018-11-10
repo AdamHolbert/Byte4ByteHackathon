@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eb8c79fa2ec24b629d5782f57fc20702" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="HackathonModel.Family" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="HackathonModel.FoodKit" Width="1.5" PointX="7.75" PointY="2" />
+        <EntityTypeShape EntityType="HackathonModel.FoodPantry" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="HackathonModel.FoodPantryStock" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="HackathonModel.Item" Width="1.5" PointX="3" PointY="6.75" />
+        <EntityTypeShape EntityType="HackathonModel.ItemType" Width="1.5" PointX="7.75" PointY="5" />
+        <EntityTypeShape EntityType="HackathonModel.OrderItem" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="HackathonModel.Order" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="HackathonModel.PantryCoordinator" Width="1.5" PointX="5.25" PointY="13.875" />
+        <EntityTypeShape EntityType="HackathonModel.RequestedItem" Width="1.5" PointX="5.25" PointY="8.75" />
+        <AssociationConnector Association="HackathonModel.FK_ordersfamilyid" />
+        <AssociationConnector Association="HackathonModel.FK_FoodPantryStockFoodPantryID" />
+        <AssociationConnector Association="HackathonModel.FK_PantryCoordinatorFoodPantryID" />
+        <AssociationConnector Association="HackathonModel.FK_RequestItemsFoodPantryID" />
+        <AssociationConnector Association="HackathonModel.FK_FoodPantryStockItemID" />
+        <AssociationConnector Association="HackathonModel.FK_OrderItemsItemID" />
+        <AssociationConnector Association="HackathonModel.FK_RequestItemsItemID" />
+        <AssociationConnector Association="HackathonModel.FK_OrderItemsOrderID" />
+        <AssociationConnector Association="HackathonModel.FK_FoodPantryStockItemID1" />
+        <AssociationConnector Association="HackathonModel.FK_itemstypeid" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

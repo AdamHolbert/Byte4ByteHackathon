@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Donation";
+}
+@section Scripts{
+    @Scripts.Render("~/Scripts/Custom/Donation.js")
+}
+
+<h2>Thank You for Your Donation</h2>
+<div>
+    Every dollar you spend will go to a hungry student in need.
+</div>
+
+<div>
+    Donate $
+    <input type="text" id="donationInputAmount"/>.00
+</div>
+
+<div>
+    @*slider*@
+</div>
+
+<div id="donateSubmit"
+     class="btn btn-success">
+    Donate
+</div>
+
+<div id="donationMessage">
+    Your donation of $0.00 will feed 0 students.
+</div>
+
+
+

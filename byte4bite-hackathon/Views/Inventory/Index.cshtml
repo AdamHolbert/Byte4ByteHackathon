@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Inventory Manager";
+}
+
+<h1>Inventory Manager</h1>
+
+<script class="inventoryTemplate" type="text/html">
+    <label>ID</label>
+    <label>Name</label>
+    <label>Number on hand</label>
+    <label>Number needed</label>
+    <label>Item value</label>
+    {{#each Items}}
+    <br />
+    <label>{{ID}}</label>
+    <label>{{Name}}</label>
+    <label>{{ID}}</label>
+    <label>{{Name}}</label>
+    <label>{{ID}}</label>
+    {{/each}}
+</script>
+
+<div id="inventoryHolder"></div>
+
