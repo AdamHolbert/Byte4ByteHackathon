@@ -42,18 +42,20 @@ $(function () {
         if (e.which == 13) {
             var searchText = $(this).val().toUpperCase();
             if (searchText == "") {
-                for (var i = 0; i < items.length; i++) {
-                     $("#" + items[i].ItemID).removeClass("hidden");
-                }
+                $(".itemLineItem").show();
+                //for (var i = 0; i < items.length; i++) {
+                //    //$("#" + items[i].ItemID).removeClass("hidden");
+                //    $("#" + items[i].ItemID).show();//("hidden");
+                //}
             }
             else {
-                //$(".itemLineItem").css('display','none');
+                $(".itemLineItem").hide();//.css('display','none');
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].ItemName.toUpperCase().includes(searchText)) {
-                        $("#" + items[i].ItemID).removeClass("hidden");
-                    } else {
-                        $("#" + items[i].ItemID).addClass("hidden");
-                    }
+                        $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
+                    } //else {
+                    //    $("#" + items[i].ItemID).addClass("hidden");
+                    //}
                 }
             }
         }
@@ -91,7 +93,9 @@ function getPantryInventory() {
 
             var runningTotal = 0;
             $.each($(".itempointtotal"), function (i, ele) {
-                runningTotal += parseFloat($(ele).text());
+                var value = $(ele).text(); 
+                if (value != "")
+                    runningTotal += parseFloat(value);
             });
             $("#totalPoints").text(runningTotal);
         });
