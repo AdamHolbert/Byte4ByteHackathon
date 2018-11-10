@@ -4,15 +4,18 @@
 }
 
 @section Scripts{
+    @Scripts.Render("~/Scripts/jquery-3.3.1.js")
     @Scripts.Render("~/Scripts/Custom/inventory.js")
     @Scripts.Render("~/Scripts/Handlebars.js")
 }
-<h1>Inventory Manager</h1>
+<div class="page-header">
+    <h1 id="inventoryTitle">Inventory Manager</h1>
+</div>
+
 
 <script class="inventoryTemplate" type="text/html">
-    <table>
+    <table class="table">
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Number on hand</th>
             <th>Number needed</th>
@@ -20,7 +23,6 @@
         </tr>
         {{#each Items}}
         <tr>
-            <td>{{ItemID}}</td>
             <td>{{ItemName}}</td>
             <td>{{ItemCount}}</td>
             <td>{{RequestCount}}</td>
@@ -30,5 +32,39 @@
     </table>
 </script>
 
+<script class="inventoryEdit" type="text/html">
+    <table id="editTable" class="table">
+        <tr>
+            <th>Name</th>
+            <th>Number on hand</th>
+            <th>Number needed</th>
+            <th>Item value</th>
+        </tr>
+        {{#each Items}}
+        <tr class"existingItem" id="exisitingItem_{{ID}}">
+            <td><input id="existingItemName_{{ID}}" type="text" value="{{ItemName}}" /></td>
+            <td><input id="existingItemCount_{{ID}}" type="number" value="{{ItemCount}}" /></td>
+            <td><input id="existingItemRequest_{{ID}}" type="number" value="{{RequestCount}}" /></td>
+            <td><input id="existingItemPoints_{{ID}}" type="number" value="{{Points}}" /></td>
+        </tr>
+        {{/each}}
+    </table>
+    <button id="addLineItem" class="btn btn-info" style="width: 35px; float: left;">+</button>
+
+    <button id="doneEdit" class="btn btn-warning" style="width: 250px; float: right;">Done</button>
+</script>
+
+<script class="addLine" type="text/html">
+    
+        <tr class="newItem" id="newItem_{{ID}}">
+            <td><input id="newItemName_{{ID}}" type="text" value=" " /></td>
+            <td><input id="newItemCount_{{ID}}" type="number" value="0" /></td>
+            <td><input id="newItemRequest_{{ID}}" type="number" value="0" /></td>
+            <td><input id="newItemPoints_{{ID}}" type="number" value="0" /></td>
+        </tr>
+</script>
+
 <div id="inventoryHolder"></div>
+<br /><br />
+<button id="editButton" type="button" class="btn btn-primary btn-lg">EDIT</button>
 
