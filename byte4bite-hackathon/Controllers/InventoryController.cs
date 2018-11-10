@@ -15,6 +15,7 @@ namespace byte4bite_hackathon.Controllers
             return View();
         }
 
+        //get all of the products for a pantry
         public JsonResult GetProductsForPantry(int pantryID)
         {
             using (var context = new HackathonEntities())
@@ -28,7 +29,7 @@ namespace byte4bite_hackathon.Controllers
                         RequestCount = fps.Item.RequestedItems.Count(ri => ri.FoodPantryID == pantryID
                             && ri.Quantity > 0
                             && ri.FulfillByDate > DateTime.Now),
-                        Points = fps.Item.PointValue
+                        Points = fps.Item.PointValue,
                     }).ToList();
                 return Json(inventory);
             }
