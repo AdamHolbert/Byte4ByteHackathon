@@ -39,25 +39,27 @@ $(function () {
     //});
 
     $("#seachText").keypress(function (e) {
-        if (e.which == 13) {
-            var searchText = $(this).val().toUpperCase();
-            if (searchText == "") {
-                $(".itemLineItem").show();
-                //for (var i = 0; i < items.length; i++) {
-                //    //$("#" + items[i].ItemID).removeClass("hidden");
-                //    $("#" + items[i].ItemID).show();//("hidden");
-                //}
+        var searchText = $(this).val().toUpperCase();
+        $(".itemLineItem").hide();//.css('display','none');
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].ItemName.toUpperCase().includes(searchText) || searchText == "") {
+                $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
             }
-            else {
-                $(".itemLineItem").hide();//.css('display','none');
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i].ItemName.toUpperCase().includes(searchText)) {
-                        $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
-                    } //else {
-                    //    $("#" + items[i].ItemID).addClass("hidden");
-                    //}
-                }
+            //else {
+            //    $("#" + items[i].ItemID).show();
+            //}
+        }
+    });
+    $("#seachText").blur(function (e) {
+        var searchText = $(this).val().toUpperCase();
+        $(".itemLineItem").hide();//.css('display','none');
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].ItemName.toUpperCase().includes(searchText) || searchText == "") {
+                $("#item_" + items[i].ItemID).show();//.removeClass("hidden");
             }
+            //else {
+            //    $("#" + items[i].ItemID).show();
+            //}
         }
     });
 
@@ -66,7 +68,6 @@ $(function () {
         $("#familiesTemplate").show();
     });
 });
-
 function getPantryInventory() {
     $.post("/Inventory/GetProductsForPantry", { pantryID: 1 }, function (data) {
         items = data;
