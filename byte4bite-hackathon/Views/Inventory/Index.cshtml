@@ -3,22 +3,31 @@
     ViewBag.Title = "Inventory Manager";
 }
 
+@section Scripts{
+    @Scripts.Render("~/Scripts/Custom/inventory.js")
+    @Scripts.Render("~/Scripts/Handlebars.js")
+}
 <h1>Inventory Manager</h1>
 
 <script class="inventoryTemplate" type="text/html">
-    <label>ID</label>
-    <label>Name</label>
-    <label>Number on hand</label>
-    <label>Number needed</label>
-    <label>Item value</label>
-    {{#each Items}}
-    <br />
-    <label>{{ID}}</label>
-    <label>{{Name}}</label>
-    <label>{{ID}}</label>
-    <label>{{Name}}</label>
-    <label>{{ID}}</label>
-    {{/each}}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Number on hand</th>
+            <th>Number needed</th>
+            <th>Item value</th>
+        </tr>
+        {{#each Items}}
+        <tr>
+            <td>{{ItemID}}</td>
+            <td>{{ItemName}}</td>
+            <td>{{ItemCount}}</td>
+            <td>{{RequestCount}}</td>
+            <td>{{Points}}</td>
+        </tr>
+        {{/each}}
+    </table>
 </script>
 
 <div id="inventoryHolder"></div>

@@ -25,11 +25,11 @@ namespace byte4bite_hackathon.Controllers
                         fps.ItemID,
                         ItemName = fps.Item.Name,
                         ItemCount = fps.Quantity,
-                        RequestCount = fps.Item.RequestedItems.Count(ri => ri.FoodPantryID == pantryID 
-                            && ri.Quantity > 0 
+                        RequestCount = fps.Item.RequestedItems.Count(ri => ri.FoodPantryID == pantryID
+                            && ri.Quantity > 0
                             && ri.FulfillByDate > DateTime.Now),
                         Points = fps.Item.PointValue
-                    });
+                    }).ToList();
                 return Json(inventory);
             }
         }

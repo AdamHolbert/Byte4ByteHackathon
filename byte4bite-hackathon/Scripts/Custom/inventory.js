@@ -1,11 +1,10 @@
 ﻿$(function () {
-
-    $("#inventoryTemplate").click(function () {
-        $.post("/Inventory/Index", function (data) {
-            var source = $(".dummytemplate").html();
-            var template = Handlebars.compile(source);
-            $("#inventoryHolder").empty().append(template(data));
-        });
+    $.post("/Inventory/GetProductsForPantry", { pantryID: 1 }, function (data) {
+        var source = $(".inventoryTemplate").html();
+        var template = Handlebars.compile(source);
+        var obj = {
+            Items: data
+        };
+        $("#inventoryHolder").empty().append(template(obj));
     });
-
 });
