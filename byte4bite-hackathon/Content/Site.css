@@ -26,3 +26,8 @@ textarea {
 tbody tr:hover {
     background-color: lightcyan;
 }
+
+
+hidden {
+    display: none;
+}

@@ -65,18 +65,15 @@
         </thead>
         <tbody>
             {{#each items}}
-            <tr id="{{ID}}" class="itemLineItem">
+            <tr class="itemLineItem" id="{{ItemID}}">
                 <td>
-                    {{Name}}
+                    {{ItemName}}
                 </td>
                 <td>
-                    {{Type}}
+                    <input id="{{ItemID}}_Quantity" type="number" class="itemQuantity">
                 </td>
                 <td>
-                    {{Quantity}}
-                </td>
-                <td>
-                    {{MaxQuantity}}
+                    <div id="{{ItemID}}_PointEquivalent" class="itempointtotal"></div>
                 </td>
             </tr>
             {{/each}}
@@ -117,7 +114,7 @@
     </table>
 </script>
 
-<div>
+<div id="familiesmain">
     <h2 style="text-align:center;margin:15px">Families</h2>
 
     <div id="familiescontainer">
@@ -126,8 +123,8 @@
     <div class="btn btn-primary" id="addNewFamily">Add New Family</div>
 </div>
 
-<div id="familiesCartTemplate" style="display:none">
-    <h2 style="text-align:center;margin:15px">Family 3820HFY4UFY74 Cart</h2>
+<div id="familiescartmain" style="display:none">
+    <h2 style="text-align:center;margin:15px" id="familycartheader">Family 3820HFY4UFY74 Cart</h2>
 
     <div style="display:inline-block;margin-bottom:20px">Search</div>
     <input style="display:inline-block" type="text" id="seachText" />
