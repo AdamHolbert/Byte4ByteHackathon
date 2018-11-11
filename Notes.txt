@@ -1,0 +1,19 @@
+Key Points
+Point value on inventory/families/orders
+	allowing multiple checkouts per week
+	also encouraging the family to be more active at the school by visiting more often
+Track inventories among different pantries allowing coordinators to place accurate orders based on the demand
+Created with the intent of implementing into the existing website with minimal complication
+No longer need to track family orders via email allowing coordinators to spend more time on corporate outreach
+FERPA compliant
+
+Future Features
+employees will login as a pantry coordinator which will then only allow them to see their pantry information
+employees with administration privlegdes will be able to view and modify all pantries
+add ability for each child to be able to check out on behald of their family with proper consent (database)
+
+Suggestions
+storing donations by user to promote friendly competition
+adding functionality to show to users who want to donate a list of requested items by food pantry
+when users are donating we show them a visual representation of the items that are equal to their amount as well as showing them a you have helped to feed n children
+ease of access: allow pantry coordinators to put hours/days for when their pantry is open
